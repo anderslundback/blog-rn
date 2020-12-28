@@ -8,9 +8,9 @@ import { Text, View, StyleSheet, TextInput, Button } from 'react-native';
 // create:
 // empty content
 
-const BlogPostForm = () => {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+const BlogPostForm = ({ onSubmit, initialValues }) => {
+    const [title, setTitle] = useState(initialValues.title);
+    const [content, setContent] = useState(initialValues.content);
     return (
         <View>
             <Text style={styles.label}>Enter Title:</Text>
@@ -20,12 +20,19 @@ const BlogPostForm = () => {
             <Button
                 title="Save Blog Post"
                 onPress={() => {
-
+                    onSubmit(title, content)
                 }}
             />
         </View>
     )
     // use callback function to navigate once we have added the blogpost
+};
+
+BlogPostForm.defaultProps = {
+    initialValues: {
+        title: '',
+        content: ''
+    }
 };
 
 const styles = StyleSheet.create({

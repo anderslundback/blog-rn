@@ -3,10 +3,9 @@ import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { Context } from '../context/BlogContext';
 
 const CreateScreen = ({ navigation }) => {
-    const { state } = useContext(Context);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-
+    const { addBlogPost } = useContext(Context);
 
     return (
         <View>
@@ -14,8 +13,16 @@ const CreateScreen = ({ navigation }) => {
             <TextInput style={styles.input} value={title} onChangeText={(text) => setTitle(text)} />
             <Text style={styles.label}>Enter Content:</Text>
             <TextInput style={styles.input} value={content} onChangeText={(content) => setContent(content)} />
-            <Button title="Add Blog Post" />
+            <Button
+                title="Add Blog Post"
+                onPress={() => {
+                    addBlogPost(title, content, () => {
+                        navigation.navigate('Index');
+                    })
+                }}
+            />
         </View>
+        // use callback function to navigate once we have added the blogpost
     );
 };
 
